@@ -51,4 +51,4 @@ jobs:
           key: ${{ secrets.AWS_EC2_SSH_KEY }}
           script: |
             docker pull tokyj515/docker-kubernetes-test
-            kubectl apply -f docker-kubernetes-test/deploy.yaml
+            kubectl apply -f deploy.yaml
