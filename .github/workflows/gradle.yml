@@ -45,14 +45,14 @@ jobs:
       - name: Pull Docker image
         run: docker pull tokyj515/docker-kubernetes-test
 
-      - name: Create and start Docker container
-        run: docker create --name temp-container tokyj515/docker-kubernetes-test
+      - name: Create and start Docker container in detached mode
+        run: docker create --name extract-container tokyj515/docker-kubernetes-test
 
-      - name: Copy deploy.yaml from container to host
-        run: docker cp temp-container:/app/deploy.yaml ./deploy.yaml
+      - name: Copy deploy.yaml from container to EC2 root directory
+        run: docker cp extract-container:/app/deploy.yaml /home/ubuntu/deploy.yaml
 
       - name: Apply Kubernetes deployment
-        run: kubectl apply -f deploy.yaml
+        run: kubectl apply -f /home/ubuntu/deploy.yaml
 
       - name: Clean up Docker container
-        run: docker rm -f temp-container
+        run: docker rm -f extract-container
