@@ -46,4 +46,5 @@ jobs:
         run: docker pull tokyj515/docker-kubernetes-test
 
       - name: Apply Kubernetes deployment
-        run: kubectl apply -f deploy.yaml
+        run: kubectl apply -f /home/ubuntu/deploy.yaml
+
