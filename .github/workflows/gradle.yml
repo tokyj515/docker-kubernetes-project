@@ -42,9 +42,25 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Pull Docker image (optional)
-        run: docker pull tokyj515/docker-kubernetes-test
+      - name: Install SSH client
+        run: sudo apt-get install -y openssh-client
 
-      - name: Apply Kubernetes deployment
-        run: kubectl apply -f /home/ubuntu/deploy.yaml
+      - name: Add SSH key
+        run: echo "${{ secrets.AWS_EC2_SSH_KEY }}" > key.pem && chmod 600 key.pem
 
+      - name: SSH and Apply Kubernetes Deployment on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@${{ secrets.AWS_EC2_HOST }} << 'EOF'
+            # Ensure Docker is installed and running
+            sudo systemctl start docker
+            sudo usermod -aG docker ubuntu
+
+            # Ensure changes are applied (log out and log back in to apply group changes)
+            sudo su - ubuntu -c "exit"
+
+            # Pull Docker image
+            sudo docker pull tokyj515/docker-kubernetes-test
+
+            # Apply Kubernetes deployment
+            kubectl apply -f /home/ubuntu/deploy.yaml
+          EOF
