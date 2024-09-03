@@ -62,5 +62,6 @@ jobs:
             sudo kubectl config current-context
 
             # Apply Kubernetes deployment with root privileges
-            sudo kubectl apply -f /home/ubuntu/deploy.yaml
+            sudo kubectl apply -f service-1.yaml
+            sudo kubectl apply -f service-2.yaml
           EOF
