@@ -55,12 +55,12 @@ jobs:
             sudo systemctl start docker
             sudo usermod -aG docker ubuntu
 
-            # Ensure changes are applied (log out and log back in to apply group changes)
-            sudo su - ubuntu -c "exit"
-
             # Pull Docker image
             sudo docker pull tokyj515/docker-kubernetes-test
 
-            # Apply Kubernetes deployment
-            kubectl apply -f /home/ubuntu/deploy.yaml
+            # Check kubectl context (optional)
+            sudo kubectl config current-context
+
+            # Apply Kubernetes deployment with root privileges
+            sudo kubectl apply -f /home/ubuntu/deploy.yaml
           EOF
