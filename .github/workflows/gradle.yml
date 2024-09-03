@@ -39,6 +39,7 @@ jobs:
         run: docker push tokyj515/docker-kubernetes-test
 
   deploy:
+    needs: build  # deploy 작업이 build 작업을 필요로 함
     runs-on: ubuntu-22.04
 
     steps:
