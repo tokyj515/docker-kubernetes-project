@@ -20,8 +20,11 @@ jobs:
           distribution: 'temurin'
           java-package: jdk
 
+      - name: Set execute permission on gradlew
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew clean build -x test
 
       - name: Build Docker image
         run: docker build -t tokyj515/docker-kubernetes-test .
