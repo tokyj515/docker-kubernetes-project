@@ -49,7 +49,7 @@ jobs:
         run: docker run --name temp-container tokyj515/docker-kubernetes-test
 
       - name: Copy deploy.yaml from container
-        run: docker cp temp-container:/path/to/deploy.yaml ./deploy.yaml
+        run: docker cp temp-container:/app/deploy.yaml ./deploy.yaml
 
       - name: Apply Kubernetes deployment
         run: kubectl apply -f deploy.yaml
